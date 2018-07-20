@@ -1,9 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var request = require('request')
+var axios = require('axios');
 var app = express();
-
-var apiHelpers = require('./apiHelpers.js');
+const API_KEY = require('./config.js').API_KEY;
+var model = require('./database.js');
 
 app.use(bodyParser.json());
 
@@ -11,31 +11,43 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client/dist'));
 
 app.get('/search', function(req, res) {
-    // get the search genre     
-
-    // https://www.themoviedb.org/account/signup
-
-    // use this endpoint to search for movies by genres, you will need an API key
-
-    // https://api.themoviedb.org/3/discover/movie
-
+    let params = {
+        api_key : API_KEY
+    }
+    if(req.query.genreID) params.with_genres = req.query.genreID
+    axios.get('https://api.themoviedb.org/3/discover/movie',{params})
+        .then(({data})=>res.send(data.results))
     // and sort them by horrible votes using the search parameters in the API
 });
 
 app.get('/genres', function(req, res) {
-    // make an axios request to get the list of official genres
-    
-    // use this endpoint, which will also require your API key: https://api.themoviedb.org/3/genre/movie/list
-
-    // send back
+    axios.get('https://api.themoviedb.org/3/genre/movie/list',{
+        params:{
+            api_key: API_KEY,
+            language: 'en-US'
+        }
+    }).then(({data})=>res.send(data.genres))
 });
 
 app.post('/save', function(req, res) {
-
+    model.saveFavorite(req.body,(err,results)=>{
+        if(err) res.send(err)
+        else res.send("SUCCESS")
+    })
 });
 
 app.post('/delete', function(req, res) {
+    model.deleteFavorite(req.body.id,(err,results)=>{
+        if(err) res.send(err)
+        else res.send("SUCCESS")
+    })
+});
 
+app.get('/favs', function(req,res){
+    model.getAllFavorites((err,results)=>{
+        if(err) res.send(err)
+        else res.send(results)
+    })
 });
 
 app.listen(3000, function() {
