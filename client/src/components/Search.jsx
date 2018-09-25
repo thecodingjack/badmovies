@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import gql from 'graphql-tag';
+import {client} from '../index.jsx'
 
 class Search extends React.Component {
   constructor(props) {
@@ -7,10 +9,20 @@ class Search extends React.Component {
     this.state = {
       genres: []
     };
+    this.getGenres = this.getGenres.bind(this)
   }
-  getGenres() {
-    axios.get('/genres')
-      .then(({data})=>this.setState({genres:data}))
+
+  getGenres(){
+    client.query({
+      query: gql`
+        {
+          genres{
+            id
+            name
+          }
+        }
+      `
+    }).then(response=>this.setState({genres:response.data.genres}))
   }
 
   handleSelectGenre(genreID){

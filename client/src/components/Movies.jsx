@@ -18,7 +18,7 @@ class Movies extends React.Component {
   render() {
     return (
       <ul className="movies">
-        {this.props.movies.map(movie=>(
+        {this.props.movies && this.props.movies.map(movie=>(
           <Movie handleMovieClick={this.handleMovieClick.bind(this)} key={movie.title} movie={movie}/>
         ))}
       </ul>
