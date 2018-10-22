@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "react-dev": "webpack -d --watch",
+    "yoga": "nodemon server/graphqlYoga.js",
     "server-dev": "nodemon server/index.js"
   },
   "author": "Aaron Chan",
@@ -24,9 +25,11 @@
     "express-graphql": "^0.6.12",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.9.2",
+    "graphql-yoga": "^1.16.2",
     "jquery": "^3.1.1",
     "mongoose": "^5.2.4",
     "mysql": "^2.15.0",
+    "pg": "^7.4.3",
     "react": "^15.4.2",
     "react-apollo": "^2.1.11",
     "react-dom": "^15.4.2",

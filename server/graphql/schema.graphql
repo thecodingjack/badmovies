@@ -1,0 +1,29 @@
+type Query{
+    movies(genre: String): [Movie]
+    genres: [Genre]
+    favs: [Movie]
+}
+
+type Mutation{
+    movies(
+        id: Int!
+        poster_path: String
+        title: String
+        release_date: String
+        vote_average: String
+        action: String
+    ): Movie
+}
+
+type Movie{
+    id: Int!
+    poster_path: String
+    title: String
+    release_date: String
+    vote_average: String
+}
+
+type Genre{
+    id: Int!
+    name: String
+}
