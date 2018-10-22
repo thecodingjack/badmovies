@@ -7,7 +7,7 @@ var {
 } = require('graphql');
 
 var axios = require('axios')
-const { API_KEY } = require('../server/config.js');
+const { API_KEY } = require('./config.js');
 var db = require('./postgres')
 
 const MoviesType = new GraphQLObjectType({

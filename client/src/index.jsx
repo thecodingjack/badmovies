@@ -29,7 +29,7 @@ const GET_FAVS_QUERY = gql`
       `
 
 const MUTATE_FAVS = gql`
-mutation movies($id: Int, $title: String, $poster_path: String, $release_date: String, $vote_average: String, $action: String){
+mutation movies($id: Int!, $title: String, $poster_path: String, $release_date: String, $vote_average: String, $action: String){
   movies(id: $id, title:$title, poster_path:$poster_path, release_date:$release_date, vote_average:$vote_average, action:$action,){
     id
     title
